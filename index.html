@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="Estilos/style.css">
+    <title>Registro de Especies</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="DataTables/datatables.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link href="https://cdn.datatables.net/v/dt/dt-2.2.1/sp-2.3.3/datatables.min.css" rel="stylesheet">
+    <script src="DataTables/datatables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+    <script>
+        $(document).ready(function(){
+            $('#tabla').DataTable({
+                
+            });
+        });
+
+        function toggleDarkMode(){
+            document.body.classList.toggle('bg-dark'); //fondo oscuro
+            document.body.classList.toggle('text-light'); //texto claro
+            const table = document.getElementById('tabla');
+            table.classList.toggle('table-dark'); //tabla oscura
+        }
+    </script>
+</head>
+<body>
+    <div class="container mt-4">
+        <button onclick="toggleDarkMode()" class="btn btn-secondary mb-3">Modo Oscuro / Claro</button>
+        <h2 class="text-center">Registro de Especies</h2>
+        <form id="formEspecie">
+            <div class="mb-3">
+                <label for="nombreCientifico" class="form-label">Nombre Científico</label>
+                <input type="text" class="form-control" id="nombreCientifico" required>
+                <span class="error" id="errorNombreCientifico"></span>
+            </div>
+            <div class="mb-3">
+                <label for="nombreComun" class="form-label">Nombre Común</label>
+                <input type="text" class="form-control" id="nombreComun" required>
+                <span class="error" id="errorNombreComun"></span>
+            </div>
+            <div class="mb-3">
+                <label for="habitat" class="form-label">Hábitat</label>
+                <select class="form-control" id="habitat">
+                    <option value="Terrestre">Terrestre</option>
+                    <option value="Acuático">Acuático</option>
+                    <option value="Aéreo">Aéreo</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="descripcion" class="form-label">Descripción</label>
+                <textarea class="form-control" id="descripcion" maxlength="250"></textarea>
+                <span class="error" id="errorDescripcion"></span>
+            </div>
+            <div class="mb-3">
+                <label for="imagen" class="form-label">Imagen</label>
+                <input type="file" class="form-control" id="imagen" accept="image/*">
+                <span class="error" id="errorImagen"></span>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Estado de Conservación</label>
+                <div>
+                    <input type="radio" name="estado" value="En peligro" required> En peligro
+                    <input type="radio" name="estado" value="Vulnerable"> Vulnerable
+                    <input type="radio" name="estado" value="No amenazada"> No amenazada
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary" id="agregarEspecie">Agregar Especie</button>
+            <button type="button" class="btn btn-success" id="guardarEdicion" style="display: none;">Guardar Edici&oacute;n</button>
+            <button type="button" class="btn btn-warning" id="cancelarEdicion" style="display: none;">Cancelar Edici&oacute;n</button>
+            <button type="reset" class="btn btn-secondary">Limpiar Formulario</button>
+        </form>
+        
+        <h3 class="mt-4">Lista de Especies</h3>
+        <table class="display" id="tabla">
+            <thead>
+                <tr>
+                    <th>Nombre Científico</th>
+                    <th>Nombre Común</th>
+                    <th>Hábitat</th>
+                    <th>Descripción</th>
+                    <th>Imagen</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="tablaEspecies">
+            </tbody>
+            <button type="button" class="btn btn-success" id="exportarCSV">Exportar a CSV</button>
+        </table>
+    </div>
+    <div class="container mt-4">
+        <canvas id="graficoBarras" width="400" height="200"></canvas>
+    </div>
+    <script src="JS/script.js"></script>
+</body>
+</html>
